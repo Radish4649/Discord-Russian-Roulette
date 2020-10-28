@@ -1,0 +1,11 @@
+1. make killed players unable to continue shooting until a new game has started
+    this is likely best accomplished by putting their names in the game_object file
+
+2. create !!kickstart that kicks players upon losing
+    this will likely require refactoring some existing commands
+
+3. refactor existing code
+    it's kind of ugly tbh lol
+
+4. transfer existing game_object system to sql or something
+    I need sql practice anyway so might as well do it here? idk REST is hard though.
