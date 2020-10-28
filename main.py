@@ -83,4 +83,4 @@ async def commands(cxt):
                    "!!stop: stops the game\n"
                    "!!help: ur already here buddy!!!!")
 
-bot.run('NzY4MzM5MDU4ODQ5NjExNzc2.X4_Bgg.Ikj1_a7Qdu3eEtGI3NX9a5NLOpU')
+bot.run("enter code here")
