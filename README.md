@@ -14,6 +14,6 @@ With only a hand full of commands, Roulette allows you to play russian roulette 
 !!commands: shows how to use each command
 
 ## How to Install
-1. install discordpy using the following guide:
+1. install discordpy using the following guide: https://discordpy.readthedocs.io/en/latest/intro.html#installing
 2. download the files within this repository.
 3. run main.py!
