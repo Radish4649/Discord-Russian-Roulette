@@ -1,6 +1,7 @@
 from discord.ext import commands
 import helper_functions as hf
 import game_class as gc
+from secrets import bot_key
 
 bot = commands.Bot(command_prefix='!!')
 bot.games = {}
@@ -93,4 +94,4 @@ async def h(cxt):
                    "!!stop: stops the game\n"
                    "!!h: ur already here buddy!!!!")
 
-bot.run('{CODE HERE}')
+bot.run(bot_key)
