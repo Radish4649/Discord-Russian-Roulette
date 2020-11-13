@@ -1,6 +1,6 @@
 from discord.ext import commands
 import helper_functions as hf
-
+import game_class as gc
 
 bot = commands.Bot(command_prefix='!!')
 bot.games = {}
@@ -18,13 +18,27 @@ async def start(cxt, chamber: int = 6, bullets: int = 1):
     if code in bot.games:
         await cxt.send("Slow down there bucko! There's a game already in progress."
                        "\ntype !!stop to stop the current game.")
-        return
+        return False
     elif bullets >= chamber:
         await cxt.send("Whoa there sheriff! You can't make a game that dangerous")
-        return
+        return False
 
-    bot.games[code] = hf.Game(code, chamber, bullets)
-    await cxt.send("Started a game with chamber size {} and {} bullets".format(chamber, bullets))
+    bot.games[code] = gc.Game(code, chamber, bullets)
+    await cxt.send("Started a game with chamber size {} and {} bullet{}".format(
+        chamber, bullets, hf.is_plural(bullets)))
+    return True
+
+
+@bot.command()
+async def kickstart(cxt, chamber: int = 6, bullets: int = 1):
+    code = hf.get_code(cxt)
+
+    start_success = await start(cxt, chamber, bullets)
+    if start_success:
+        bot.games[code].kick_game = True
+        await cxt.send("Kick game started! Be careful cowfolk.")
+        return True
+    return False
 
 
 @bot.command()
@@ -41,13 +55,16 @@ async def shoot(cxt, shots: int = 1):
         await cxt.send("Ghosts can't shoot, buckaroo. You've already done shot yourself!")
         return
 
-    is_dead, shots_made, bullets_remaining = bot.games[code].shoot(shots, cxt.author.id)
+    is_dead, shots_made, bullets_remaining, kick_game = bot.games[code].shoot(shots, cxt.author.id)
 
     if is_dead:
-        await cxt.send("BLAM! {} was blown to smitherines after {} shots!!"
-                       .format(cxt.message.author.mention, shots_made))
+        await cxt.send("BLAM! {} was blown to smithereens after {} shot{}!!"
+                       .format(cxt.message.author.mention, shots_made, hf.is_plural(shots_made)))
+        if kick_game:
+            await cxt.guild.kick(user=cxt.author)
+            await cxt.send("{} was kicked from the server".format(cxt.message.author.name))
         if bullets_remaining != 0:
-            await cxt.send("{} bullets left.".format(bullets_remaining))
+            await cxt.send("{} bullet{} left.".format(bullets_remaining, hf.is_plural(bullets_remaining)))
         else:
             del bot.games[code]
             await cxt.send("No bullets remaining! Game ended.")
@@ -76,4 +93,4 @@ async def h(cxt):
                    "!!stop: stops the game\n"
                    "!!h: ur already here buddy!!!!")
 
-bot.run('put code here')
+bot.run('{CODE HERE}')
