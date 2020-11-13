@@ -7,11 +7,13 @@ With only a hand full of commands, Roulette allows you to play russian roulette 
 ## Commands
 !!start {clip} {ammo}: initializes a game of roulette using {clip} number of ammo slots and {ammo} number of live ammunition. The default is six and one respectively.
 
+!!start {clip} {ammo}: initializes a game that kicks each shot user.
+
 !!shoot {shots}: causes a bullet shot by the commanding user. 
 
 !!stop: stops any currently running game in that chat 
 
-!!commands: shows how to use each command
+!!h: shows how to use each command
 
 ## How to Install
 1. install discordpy using the following guide: https://discordpy.readthedocs.io/en/latest/intro.html#installing
